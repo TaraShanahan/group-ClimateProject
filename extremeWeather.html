@@ -1,0 +1,153 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {box-sizing: border-box;}
+
+.img-magnifier-container {
+  position:relative;
+}
+
+.img-magnifier-glass {
+  position: absolute;
+  border: 3px solid #000;
+  border-radius: 50%;
+  cursor: none;
+
+  width: 100px;
+  height: 100px;
+}
+</style>
+<script>
+function magnify(imgID, zoom) {
+  var img, glass, w, h, bw;
+  img = document.getElementById(imgID);
+
+  glass = document.createElement("DIV");
+  glass.setAttribute("class", "img-magnifier-glass");
+
+  img.parentElement.insertBefore(glass, img);
+
+  glass.style.backgroundImage = "url('" + img.src + "')";
+  glass.style.backgroundRepeat = "no-repeat";
+  glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
+  bw = 3;
+  w = glass.offsetWidth / 2;
+  h = glass.offsetHeight / 2;
+
+  glass.addEventListener("mousemove", moveMagnifier);
+  img.addEventListener("mousemove", moveMagnifier);
+  /*and also for touch screens:*/
+  glass.addEventListener("touchmove", moveMagnifier);
+  img.addEventListener("touchmove", moveMagnifier);
+  function moveMagnifier(e) {
+    var pos, x, y;
+
+    e.preventDefault();
+
+    pos = getCursorPos(e);
+    x = pos.x;
+    y = pos.y;
+
+    if (x > img.width - (w / zoom)) {x = img.width - (w / zoom);}
+    if (x < w / zoom) {x = w / zoom;}
+    if (y > img.height - (h / zoom)) {y = img.height - (h / zoom);}
+    if (y < h / zoom) {y = h / zoom;}
+    /*set the position of the magnifier glass:*/
+    glass.style.left = (x - w) + "px";
+    glass.style.top = (y - h) + "px";
+
+    glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
+  }
+  function getCursorPos(e) {
+    var a, x = 0, y = 0;
+    e = e || window.event;
+
+    a = img.getBoundingClientRect();
+
+    x = e.pageX - a.left;
+    y = e.pageY - a.top;
+
+    x = x - window.pageXOffset;
+    y = y - window.pageYOffset;
+    return {x : x, y : y};
+  }
+}
+</script>
+</head>
+<body>
+
+  <link rel="BebasNeue" href="https://use.typekit.net/xko5rlc.css">
+    <link rel="stylesheet" href="css/style.css">
+    <h1>Climate Change</h1>
+
+    <ul>
+      <li><a href="home.html">Home</a></li>
+         <li class="dropdown">
+        <a href="" class="dropbtn">News</a>
+        <div class="dropdown-content">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
+      </li>
+        <li class="dropdown">
+        <a href="" class="dropbtn">Contact</a>
+        <div class="dropdown-content">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
+      </li>
+        <li class="dropdown">
+        <a href="" class="dropbtn">About</a>
+        <div class="dropdown-content">
+          <a href="#">Link 1</a>
+          <a href="#">Link 2</a>
+          <a href="#">Link 3</a>
+        </div>
+      </li>
+        </ul>
+
+
+<h2>Extereme Weather</h2>
+
+<div class="img-magnifier-container">
+  <img id="myimage" src="https://www.pnas.org/content/115/33/8232/F1.large.jpg" width="600" height="400">
+</div>
+
+<br>
+<h3>Precipitation</h3>
+<p>Scientists agree that the earth’s rising temperatures are fueling longer and hotter heat waves, more frequent droughts, heavier rainfall, and more powerful hurricanes. In 2015, for example, scientists said that an ongoing drought in California—the state’s worst water shortage in
+1,200 years—had been intensified by 15 percent to 20 percent by global warming.</p>
+<br>
+<h3>Tropical Storms</h3>
+<p>The earth’s ocean temperatures are getting warmer, too—which means that tropical storms can pick up more energy. So global warming could turn, say, a category 3 storm into a more dangerous category 4 storm. In fact, scientists have found that the frequency of North Atlantic hurricanes has increased since the early 1980s, as well as the number of storms that reach categories 4 and 5. In 2005, Hurricane Katrina—the costliest hurricane in U.S. history—struck New Orleans; the second-costliest, Hurricane Sandy, hit the East Coast in 2012.</p>
+<br>
+<h3>Heat Waves</h3>
+<p>The impacts of global warming are being felt across the globe. Extreme heat waves have caused tens of thousands of deaths around the world in recent years. And in an alarming sign of events to come,
+Antarctica has been losing about 134 billion metric tons of ice per year since 2002. This rate could speed up if we keep burning fossil fuels at our current pace, some experts say, causing sea levels to rise several meters over the next 50 to 150 years.</p>
+<br>
+<h3> How this directly affects people </h3>
+<table>
+    <tr>
+<td>- Exposure to extreme heat can lead to heat stroke and dehydration</td>
+    </tr>
+    <tr>
+<td>- Drought of flash floods will destroy farm crops which will affect food production and create shortages.</td>
+    </tr>
+    <tr>
+<td>- Storms and hurricanes create a lot of damage especially in urban areas by destroying roads and buildings.</td>
+    </tr>
+
+    </table>
+
+
+<script>
+
+magnify("myimage", 3);
+</script>
+
+</body>
+</html>
